@@ -10,80 +10,21 @@ fs.readFile(
 
     const lines: Array<string> = data.split(/\r?\n/);
 
-    enum opponentPlays {
-      Rock = "A",
-      Paper = "B",
-      Scissors = "C",
-    }
-
-    enum playerPlays {
-      Rock = "X",
-      Paper = "Y",
-      Scissors = "Z",
-    }
-
-    enum outcomeScore {
-      Win = 6,
-      Draw = 3,
-      Loss = 0,
-    }
-
-    const opponentHandScore: { [key: string]: number } = {
-      A: 1,
-      B: 2,
-      C: 3,
+    const scores: { [key: string]: number } = {
+      "A X": 1 + 3, // Rock - Rock
+      "A Y": 2 + 6, // Rock - Paper
+      "A Z": 3 + 0, // Rock - Scissors
+      "B X": 1 + 0, // Paper - Rock
+      "B Y": 2 + 3, // Paper - Paper
+      "B Z": 3 + 6, // Paper - Scissors
+      "C X": 1 + 6, // Scissors - Rock
+      "C Y": 2 + 0, // Scissors - Paper
+      "C Z": 3 + 3, // Scissors - Scissors
     };
 
-    const playerHandScore: { [key: string]: number } = {
-      X: 1,
-      Y: 2,
-      Z: 3,
-    };
-
-    let opponentScore = 0;
-    let playerScore = 0;
-
-    lines.forEach((line) => {
-      const opponentHand = line.split(" ")[0];
-      const playerHand = line.split(" ")[1];
-      const playerWins =
-        (opponentHand === opponentPlays.Rock &&
-          playerHand === playerPlays.Paper) ||
-        (opponentHand === opponentPlays.Paper &&
-          playerHand === playerPlays.Scissors) ||
-        (opponentHand === opponentPlays.Scissors &&
-          playerHand === playerPlays.Rock);
-      const playerDraws =
-        (opponentHand === opponentPlays.Rock &&
-          playerHand === playerPlays.Rock) ||
-        (opponentHand === opponentPlays.Paper &&
-          playerHand === playerPlays.Paper) ||
-        (opponentHand === opponentPlays.Scissors &&
-          playerHand === playerPlays.Scissors);
-      const playerLoses =
-        (opponentHand === opponentPlays.Rock &&
-          playerHand === playerPlays.Scissors) ||
-        (opponentHand === opponentPlays.Paper &&
-          playerHand === playerPlays.Rock) ||
-        (opponentHand === opponentPlays.Scissors &&
-          playerHand === playerPlays.Paper);
-
-      opponentScore += opponentHandScore[opponentHand];
-      playerScore += playerHandScore[playerHand];
-
-      if (playerWins) {
-        playerScore += outcomeScore.Win;
-      }
-
-      if (playerDraws) {
-        playerScore += outcomeScore.Draw;
-        opponentScore += outcomeScore.Draw;
-      }
-
-      if (playerLoses) {
-        opponentScore += outcomeScore.Win;
-      }
-    });
+    const playerScore = lines.reduce((acc, line) => {
+      return acc + scores[line];
+    }, 0);
 
     // Star 1:
     console.log(playerScore);
