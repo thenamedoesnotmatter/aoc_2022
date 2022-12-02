@@ -22,10 +22,10 @@ fs.readFile(
       return [];
     });
 
-    // day 1:
+    // star 1:
     console.log(Math.max(...arrayWithCounts));
 
-    // day 2:
+    // star 2:
     const topThree = arrayWithCounts
       .sort((a, b) => (a < b ? 1 : a > b ? -1 : 0))
       .slice(0, 3)
