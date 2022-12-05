@@ -11,8 +11,9 @@ fs.readFile(
     const lines: Array<string> = data.split(/\r?\n/);
     const alpha = Array.from(Array(26)).map((e, i) => i + 65);
     const alphabet = alpha.map((x) => String.fromCharCode(x).toLowerCase());
-    const alphabet_2 = alpha.map((x) => String.fromCharCode(x).toUpperCase());
-    const merged = alphabet.concat(alphabet_2);
+    const alphabetLowerAndUpperCase = alphabet.concat(
+      alphabet.map((c) => c.toUpperCase())
+    );
 
     let points = 0;
 
